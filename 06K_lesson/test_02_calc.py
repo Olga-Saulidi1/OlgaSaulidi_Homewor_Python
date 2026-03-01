@@ -9,8 +9,7 @@ def test_slow_calculator():
     driver.maximize_window()
     
     try:
-        driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")
-        
+        driver.get("https://bonigarcia.dev/selenium-webdriver-java/slow-calculator.html")        
         delay_input = driver.find_element(By.CSS_SELECTOR, "#delay")
         delay_input.clear()
         delay_input.send_keys("45")
@@ -24,14 +23,12 @@ def test_slow_calculator():
         
         try:
             WebDriverWait(driver, 46).until(
-                EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".screen"), "15")
-            )
-            
+                EC.text_to_be_present_in_element((By.CSS_SELECTOR, ".screen"), "15"))
             actual_result = result_element.text
             assert actual_result == "15", f"Ожидался результат 15, но получили {actual_result}"
             print(f"Тест пройден! Результат: {actual_result}")
             
-        except:
+        except Exception:
             actual_result = result_element.text
             print(f"Ошибка! Текущий результат: {actual_result}")
             raise

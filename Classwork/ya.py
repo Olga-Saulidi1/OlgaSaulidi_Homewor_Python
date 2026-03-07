@@ -1,25 +1,38 @@
 from time import sleep
 from selenium import webdriver
+
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+# from selenium.webdriver.firefox.service import Service as FirefoxService
+# from webdriver_manager.firefox import GeckoDriverManager
+# from selenium.webdriver.edge.service import Service as EdgeService
+# from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-driver.maximize_window()
-driver.get("https://ya.ru")
-sleep(5)
+chrome = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+# ff = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+# edge = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
 
-driver.fullscreen_window()
+# def make_screenshot(browser):
+# 	browser.maximize_window()
+# 	browser.get("https://ya.ru/")
+# 	sleep(5)
+# 	browser.save_screenshot("./ya_"+browser.name+".png")
+# 	browser.quit()
 
-sleep(5)
+# make_screenshot(chrome)
+# make_screenshot(ff)
+# make_screenshot(edge)
 
-driver.save_screenshot('./image.png')
+browser = webdriver.Chrome()
+service=ChromeService(ChromeDriverManager().install())
 
+#Вывод в панель заголовка
+# browser.get("https://sky.pro")
+# current_title = browser.title
+# print(current_title)
 
-# driver.back()
-# driver.forward()
-# driver.refresh()
+#Вывод в панель url
+url = browser.current_url
+print(url)
 
-# driver.set_window_size(680, 440)
-
-
-sleep(15)
+browser.quit()

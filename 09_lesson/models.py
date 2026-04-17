@@ -1,14 +1,15 @@
 from sqlalchemy import text
 
+
 class StudentDB:
-    
+
     def __init__(self, connection):
         self.conn = connection
 
     def create_student(self, name, email):
         # Добавление нового студента
         query = text("""
-            INSERT INTO students (name, email) 
+            INSERT INTO students (name, email)
             VALUES (:name, :email)
             RETURNING id, name, email
         """)
@@ -24,11 +25,12 @@ class StudentDB:
     def update_student_email(self, student_id, new_email):
         # Обновление email студента
         query = text("""
-            UPDATE students SET email = :email 
+            UPDATE students SET email = :email
             WHERE id = :id
             RETURNING id, name, email
         """)
-        result = self.conn.execute(query, {"id": student_id, "email": new_email})
+        result = self.conn.execute(
+            query, {"id": student_id, "email": new_email})
         return result.mappings().first()
 
     def delete_student_by_id(self, student_id):

@@ -1,10 +1,11 @@
 import pytest
-from sqlalchemy import text
 from db_config import engine
+
 
 @pytest.fixture(scope="session")
 def db_engine():
     return engine
+
 
 @pytest.fixture
 def db_connection(db_engine):

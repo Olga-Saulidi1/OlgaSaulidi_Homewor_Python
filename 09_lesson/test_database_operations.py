@@ -1,6 +1,7 @@
 import pytest
 from models import StudentDB
 
+
 class TestStudentOperations:
 
     # Позитивный тест на создание студента
@@ -17,7 +18,9 @@ class TestStudentOperations:
         assert new_student is not None, "Студент не был создан"
         assert new_student["name"] == student_name
         assert new_student["email"] == student_email
-        assert expected_student_count_after == expected_student_count_before + 1, "Количество студентов не увеличилось"
+        assert expected_student_count_after == (
+            expected_student_count_before + 1
+        )
 
     # Позитивный тест на обновление данных студента
     def test_update_student_email(self, db_connection):
@@ -27,7 +30,8 @@ class TestStudentOperations:
         original_student = db.create_student("Мария Сидорова", "maria@old.com")
         new_email = "maria@new.com"
 
-        updated_student = db.update_student_email(original_student["id"], new_email)
+        updated_student = db.update_student_email(
+            original_student["id"], new_email)
 
         assert updated_student is not None
         assert updated_student["id"] == original_student["id"]
@@ -42,20 +46,24 @@ class TestStudentOperations:
         """Тест удаления студента."""
         db = StudentDB(db_connection)
 
-        student_to_delete = db.create_student("Петр Иванов", "petr@example.com")
+        student_to_delete = db.create_student(
+            "Петр Иванов", "petr@example.com")
         student_id = student_to_delete["id"]
-        
+
         assert db.get_student_by_id(student_id) is not None
-        
+
         expected_student_count_before = len(db.get_all_students())
 
         db.delete_student_by_id(student_id)
 
         expected_student_count_after = len(db.get_all_students())
-        assert db.get_student_by_id(student_id) is None, "Студент все еще существует в БД"
-        assert expected_student_count_after == expected_student_count_before - 1, "Количество студентов не уменьшилось"
+        assert db.get_student_by_id(
+            student_id) is None, "Студент все еще существует в БД"
+        assert expected_student_count_after == (
+            expected_student_count_before - 1
+        )
 
-    # Негативный тест 
+    # Негативный тест
     def test_create_student_duplicate_email(self, db_connection):
         """Тест на создание двух студентов с одинаковым email."""
 
@@ -63,5 +71,5 @@ class TestStudentOperations:
         common_email = "duplicate@example.com"
         db.create_student("Первый Студент", common_email)
 
-        with pytest.raises(Exception): 
+        with pytest.raises(Exception):
             db.create_student("Второй Студент", common_email)
